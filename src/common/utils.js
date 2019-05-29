@@ -1,13 +1,100 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 14:23:01
- * @LastEditTime: 2019-05-28 14:24:24
+ * @LastEditTime: 2019-05-29 14:17:20
  * @Description:
  **/
 import moment from 'moment';
 import nzh from 'nzh/cn';
+import { message } from 'antd';
 import { push } from 'react-router-redux';
 import { store } from '../store/configureStore';
+
+export async function checkHttpStatus(response) {
+    if (response.status >= 200 && response.status < 300) {
+        let json = await response.json();
+        return json;
+    } else {
+        let error;
+        try {
+            let json = await response.json();
+            error = new Error(json.msg);
+        } catch (e) {
+            error = new Error(response.statusText);
+        }
+        error.response = response;
+        throw error;
+    }
+}
+
+export const checkDataStatus = json => {
+    // 被手动取消
+    if (json.exception === 'AbortError') {
+        console.error('you have aborted the request');
+        return false;
+    }
+    if (json.success === 'true' || json.success === true) {
+        return true;
+    }
+    if (json.result && json.result.code === '000') {
+        return true;
+    }
+    if (json.hasOwnProperty('header') && (json.header.success === true || json.header.success === 'true')) {
+        return true;
+    }
+    if (json.success === 'false' || json.success === false) {
+        message.error(json.msg, 3);
+        return false;
+    }
+    if (json.hasOwnProperty('header') && (json.header.success === false || json.header.success === 'false')) {
+        message.error(json.header.msg, 3);
+        return false;
+    }
+
+    if (json.result && json.result.code !== '000') {
+        message.error(json.result.msg || json.result.message, 3);
+        return false;
+    }
+};
+
+/**
+ * 向服务端发送请求
+ * @param {string} url 请求 url
+ * @param {any} query  请求参数对象
+ * @return {any} 返回 json 格式数据
+ *
+ * ### 会自动处理
+ *  - 网络错误（发送请求失败）： 弹出错误警告并返回失败 json 对象
+ *  - 状态码失败错误（非2XX 响应）：弹出错误警告并返回失败 json 对象
+ *  - token 失效：将清空登录信息、跳转登录页面
+ *
+ * 否则算**请求成功**：返回完整 json 数据
+ */
+export const fetchData = async (url, query) => {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify(query)
+        });
+
+        let json = await checkHttpStatus(response);
+        return json;
+    } catch (error) {
+        console.error(error);
+        // message.error(`请求失败：${error.message}`)
+        return {
+            success: false,
+            msg: error.message,
+            exception: error.name
+        };
+    }
+};
 
 export const asyncActionCreator = (action, func) => {
     return query => async dispatch => {

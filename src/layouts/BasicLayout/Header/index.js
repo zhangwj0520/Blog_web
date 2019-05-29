@@ -1,19 +1,59 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2018-02-04 07:33:22
- * @LastEditTime: 2019-05-29 08:05:13
+ * @LastEditTime: 2019-05-29 16:37:29
  * @Description:
  **/
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Input, Icon, Popover } from 'antd';
+import Texty from 'rc-texty';
+import TweenOne from 'rc-tween-one';
 
 import styles from './index.module.less';
-import { hidden } from 'ansi-colors';
-// import {showMessage} from '../common/show';
 let handle1 = null,
     handle2 = null;
+
+const geInterval = e => {
+    switch (e.index) {
+        case 0:
+            return 0;
+        case 1:
+            return 150;
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+            return 150 + 450 + (e.index - 2) * 10;
+        default:
+            return 150 + 450 + (e.index - 6) * 150;
+    }
+};
+const getEnter = e => {
+    const t = {
+        opacity: 0,
+        scale: 0.8,
+        y: '-100%'
+    };
+    if (e.index >= 2 && e.index <= 6) {
+        return { ...t, y: '-30%', duration: 150 };
+    }
+    return t;
+};
+
+const getSplit = e => {
+    const t = e.split(' ');
+    const c = [];
+    t.forEach((str, i) => {
+        c.push(<span key={`${str}-${i}`}>{str}</span>);
+        if (i < t.length - 1) {
+            c.push(<span key={` -${i}`} />);
+        }
+    });
+    return c;
+};
 
 function showMessage(ele, text, time = 4000, delay = 0) {
     clearTimeout(handle1);
@@ -119,11 +159,57 @@ class HeaderNav extends Component {
             <div className={styles.HeaderNav}>
                 <div className={styles.container}>
                     <div className={styles.siteLogo}>
-                        <h2>
+                        {/* <h2>
                             <span>Te</span>
                             <span>sla</span>
-                        </h2>
-                        <p>XXXXXXXXXX</p>
+                        </h2> */}
+                        <Texty
+                            className={styles.title}
+                            type="mask-top"
+                            delay={400}
+                            enter={getEnter}
+                            interval={geInterval}
+                            component={TweenOne}
+                            componentProps={{
+                                animation: [
+                                    { x: 130, type: 'set' },
+                                    { x: 100, delay: 500, duration: 450 },
+                                    {
+                                        duration: 300,
+                                        ease: 'easeOutQuart',
+                                        x: 0
+                                    },
+                                    {
+                                        delay: -300,
+                                        duration: 1000,
+                                        ease: 'easeInOutQuint',
+                                        letterSpacing: 0,
+                                        scale: 0.9
+                                    },
+                                    {
+                                        delay: -300,
+                                        duration: 1000,
+                                        ease: 'easeInOutQuint',
+                                        scale: 1,
+                                        width: '100%'
+                                    }
+                                ]
+                            }}>
+                            哈哈哈哈哈哈
+                        </Texty>
+                        <TweenOne
+                            className={styles.titleBar}
+                            animation={{
+                                delay: 2000,
+                                ease: 'easeInOutExpo',
+                                type: 'from',
+                                width: 0,
+                                x: 158
+                            }}
+                        />
+                        <Texty className={styles.content} type="bottom" split={getSplit} delay={2200} interval={30}>
+                            题 诗 寄 汝 非 无 意，莫 负 青 春 取 自 惭!
+                        </Texty>
                     </div>
                     <div className={styles.navbarCollapse}>
                         <Col xs={24} sm={0}>
