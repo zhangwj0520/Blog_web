@@ -1,144 +1,84 @@
-import React from 'react';
-import {Layout, BackTop} from 'antd';
-import {withRouter} from 'react-router-dom';
-import Media from 'react-media';
+/**
+ * @LastEditors: zhang weijie
+ * @Date: 2019-05-28 13:50:04
+ * @LastEditTime: 2019-05-29 10:06:21
+ * @Description:
+ **/
+import React, { Component } from 'react';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import DocumentTitle from 'react-document-title';
-import {ContainerQuery} from 'react-container-query';
-import classNames from 'classnames';
-
-import getPageTitle from '../../utils/getPageTitle';
-import Context from './MenuContext';
-
-import Header from './components/Header';
-import SiderMenu from './components/SiderMenu';
-import Footer from './components/Footer';
-import MainRoutes from './MainRoutes';
+import { BackTop, Col, Layout, Row } from 'antd';
+import _ from 'lodash';
+import routerData from '../../routes/routerConfig';
+import Footer from './Footer';
+import Header from './Header';
+import Sidebar from './Sidebar';
+import Banner from './Banner';
+import Breadcrumb from './Breadcrumb';
 
 import styles from './index.module.less';
 
-import BasicLayoutHoc from './BasicLayoutHoc';
-
-const {Content} = Layout;
-const query = {
-    'screen-xs': {
-        maxWidth: 575
-    },
-    'screen-sm': {
-        minWidth: 576,
-        maxWidth: 767
-    },
-    'screen-md': {
-        minWidth: 768,
-        maxWidth: 991
-    },
-    'screen-lg': {
-        minWidth: 992,
-        maxWidth: 1199
-    },
-    'screen-xl': {
-        minWidth: 1200,
-        maxWidth: 1599
-    },
-    'screen-xxl': {
-        minWidth: 1600
-    }
-};
-
+const { Content } = Layout;
 @withRouter
-@BasicLayoutHoc
-class BasicLayout extends React.Component {
-    state = {
-        collapsed: false
-    };
-    componentDidMount() {
-        const reactToken = localStorage.getItem('reactToken');
-        if (!reactToken) {
-            this.props.history.push('/user/login');
-        }
-    }
-
-    onHeaderMenuClick = ({key}) => {
-        const {history} = this.props;
-        if (key === 'userCenter') {
-            history.push('/account/center');
-            return;
-        }
-        if (key === 'triggerError') {
-            history.push('/exception/trigger');
-            return;
-        }
-        if (key === 'userinfo') {
-            history.push('/account/settings/base');
-            return;
-        }
-        if (key === 'logout') {
-            localStorage.clear();
-            history.push('/user/login');
-        }
-    };
-
-    toggle = () => {
-        this.setState({
-            collapsed: !this.state.collapsed
-        });
-    };
-
-    onCollapse = collapsed => {
-        this.setState({collapsed});
-    };
-    getContext() {
-        const {location, breadcrumbNameMap} = this.props;
-        return {
-            location,
-            breadcrumbNameMap
+class UserLayout extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: 'MyBlog',
+            isHome: false
         };
     }
+    static getDerivedStateFromProps(props, state) {
+        const {
+            location: { pathname }
+        } = props;
+        const res = _.find(routerData, { pathname });
+        let title = res ? res.title : '';
+        let isHome = title === '首页';
+        return { title, isHome };
+    }
+    componentDidMount() {}
 
     render() {
-        const {
-            isMobile,
-            location: {pathname}
-        } = this.props;
-        const {collapsed} = this.state;
-        const title = getPageTitle(pathname) ? getPageTitle(pathname).title : 'title';
+        const { title, isHome } = this.state;
+        console.log(this.props);
 
         return (
-            <React.Fragment>
-                <DocumentTitle title={title}>
-                    <ContainerQuery query={query}>
-                        {params => (
-                            <Context.Provider value={this.getContext()}>
-                                <div className={classNames(params)}>
-                                    <Layout>
-                                        <SiderMenu
-                                            isMobile={isMobile}
-                                            collapsed={collapsed}
-                                            onCollapse={this.onCollapse}
-                                        />
-                                        <Layout style={{minHeight: '100vh'}}>
-                                            <Header
-                                                isMobile={isMobile}
-                                                collapsed={collapsed}
-                                                onCollapse={this.onCollapse}
-                                                onHeaderMenuClick={this.onHeaderMenuClick}
-                                            />
-                                            <Content className={styles.content}>
-                                                <BackTop />
-                                                <MainRoutes />
-                                            </Content>
-                                            <Footer />
-                                        </Layout>
-                                    </Layout>
-                                </div>
-                            </Context.Provider>
-                        )}
-                    </ContainerQuery>
-                </DocumentTitle>
-            </React.Fragment>
+            <DocumentTitle title={title ? `张为杰的博客-${title}` : '张为杰的博客'}>
+                <Layout style={{ minHeight: '100vh' }}>
+                    <BackTop />
+                    <Header />
+                    <Breadcrumb title={title} />
+                    {isHome ? <Banner /> : null}
+
+                    <Layout className={styles.container}>
+                        <Content>
+                            <Row gutter={24}>
+                                <Col xs={24} sm={18}>
+                                    <Switch>
+                                        {routerData.map((item, index) => {
+                                            return item.component ? (
+                                                <Route
+                                                    key={index}
+                                                    path={item.pathname}
+                                                    component={item.component}
+                                                    exact={item.exact}
+                                                />
+                                            ) : null;
+                                        })}
+                                    </Switch>
+                                </Col>
+                                <Col xs={24} sm={6}>
+                                    {/* <NavSide /> */}
+                                </Col>
+                            </Row>
+                        </Content>
+                    </Layout>
+                    <Footer />
+                </Layout>
+            </DocumentTitle>
         );
     }
 }
 
-export default props => (
-    <Media query="(max-width: 599px)">{isMobile => <BasicLayout {...props} isMobile={isMobile} />}</Media>
-);
+export default UserLayout;

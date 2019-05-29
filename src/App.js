@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 10:53:58
- * @LastEditTime: 2019-05-28 14:25:48
+ * @LastEditTime: 2019-05-29 10:51:04
  * @Description:
  **/
 import React, { Component } from 'react';
@@ -15,6 +15,7 @@ import Router from './routes/router';
 
 import moment from 'moment';
 import 'moment/locale/zh-cn';
+import './global.less';
 moment.locale('zh-cn');
 
 const history = syncHistoryWithStore(browserHistory, store);

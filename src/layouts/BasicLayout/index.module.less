@@ -1,23 +1,12 @@
 @import '~antd/lib/style/themes/default.less';
-#components-layout-demo-custom-trigger .trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0 24px;
-    cursor: pointer;
-    transition: color 0.3s;
+
+.container {
+    margin: 0 13%;
+    background: @layout-body-background;
 }
 
-#components-layout-demo-custom-trigger .trigger:hover {
-    color: #1890ff;
-}
-
-#components-layout-demo-custom-trigger .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 16px;
-}
-
-.content {
-    margin: 15px;
-    // padding-top: @layout-header-height;
+@media (max-width: 857px) {
+    .container {
+        margin: 7px;
+    }
 }
