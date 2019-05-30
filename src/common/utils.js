@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 14:23:01
- * @LastEditTime: 2019-05-29 14:17:20
+ * @LastEditTime: 2019-05-30 17:59:15
  * @Description:
  **/
 import moment from 'moment';
@@ -203,4 +203,17 @@ export const pySegSort = arr => {
         }
     });
     return segs;
+};
+
+export const escape2Html = str => {
+    const arrEntities = {
+        lt: '<',
+        gt: '>',
+        nbsp: ' ',
+        amp: '&',
+        quot: '"'
+    };
+    return str.replace(/&(lt|gt|nbsp|amp|quot);/gi, function(all, t) {
+        return arrEntities[t];
+    });
 };

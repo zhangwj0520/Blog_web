@@ -1,0 +1,89 @@
+.card {
+    margin-top: 8px;
+    box-shadow: 0 0 5px #555;
+}
+.noteWarp {
+    font-size: 12px;
+    padding: 10px 17px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 4px #555;
+    transition: box-shadow ease-in 300ms;
+    &:hover {
+        box-shadow: 0 0 15px #222;
+    }
+}
+.noteTitle {
+    color: #555;
+    font-size: 14px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+}
+.noteCreated {
+    margin-bottom: 0;
+}
+.noteAbstract {
+    margin: 6px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.noteAuthor {
+    text-align: right;
+}
+.nodeTag {
+    margin-top: -8px;
+}
+.noteDetail {
+    margin: 13px 0 6px;
+    color: #555;
+    font-size: 14px;
+}
+
+.keyframes(@name; @arguments) {
+    @-moz-keyframes @name {
+        @arguments();
+    }
+    @-webkit-keyframes @name {
+        @arguments();
+    }
+    @-o-keyframes @name {
+        @arguments();
+    }
+    @keyframes @name {
+        @arguments();
+    }
+}
+
+.animation(@arguments) {
+    -webkit-animation: @arguments;
+    -moz-animation: @arguments;
+    -o-animation: @arguments;
+    animation: @arguments;
+}
+
+.rotateInUpRight {
+    .keyframes(
+        rotateInUpRight;{from {transform-origin: right bottom; transform: rotate3d(0, 0, 1, -90deg) ; opacity: 0;} to {transform-origin:
+            right bottom; transform: none; opacity: 1;}}
+    );
+
+    .animation(rotateInUpRight 1s ease-in-out 1 alternate);
+}
+.rotateInDownLeft {
+    .keyframes(
+        rotateInDownLeft;{from {transform-origin: left bottom; transform: rotate3d(0, 0, 1, -45deg) ; opacity: 0;} to {transform-origin:
+            left bottom; transform: none; opacity: 1;}}
+    );
+
+    .animation(rotateInDownLeft 1s ease-in-out 1 alternate);
+}
+
+@media (max-width: 767px) {
+    .note-wrap {
+        margin-bottom: 10px;
+    }
+}
