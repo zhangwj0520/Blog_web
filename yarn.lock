@@ -8560,6 +8560,15 @@ rc-progress@~2.3.0:
     babel-runtime "6.x"
     prop-types "^15.5.8"
 
+rc-queue-anim@^1.6.12:
+  version "1.6.12"
+  resolved "https://registry.npm.taobao.org/rc-queue-anim/download/rc-queue-anim-1.6.12.tgz#ce5e2cf3ab9752ca318a930895db88df23a8623f"
+  integrity sha1-zl4s86uXUsoxipMIlduI3yOoYj8=
+  dependencies:
+    babel-runtime "6.x"
+    prop-types "^15.6.0"
+    rc-tween-one "^2.3.2"
+
 rc-rate@~2.5.0:
   version "2.5.0"
   resolved "https://registry.npm.taobao.org/rc-rate/download/rc-rate-2.5.0.tgz#72d4984a03d0a7a0e6779c7a79efcea27626abf6"
@@ -8749,7 +8758,7 @@ rc-trigger@^3.0.0-rc.2:
     rc-animate "^3.0.0-rc.1"
     rc-util "^4.4.0"
 
-rc-tween-one@^2.2.0, rc-tween-one@^2.4.1:
+rc-tween-one@^2.2.0, rc-tween-one@^2.3.2, rc-tween-one@^2.4.1:
   version "2.4.1"
   resolved "https://registry.npm.taobao.org/rc-tween-one/download/rc-tween-one-2.4.1.tgz#04354c59b0cf2cf5fab583b27878b9d6af23dcc3"
   integrity sha1-BDVMWbDPLPX6tYOyeHi51q8j3MM=

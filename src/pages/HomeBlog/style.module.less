@@ -1,0 +1,45 @@
+.keyframes(@name; @arguments) {
+    @-moz-keyframes @name {
+        @arguments();
+    }
+    @-webkit-keyframes @name {
+        @arguments();
+    }
+    @-o-keyframes @name {
+        @arguments();
+    }
+    @keyframes @name {
+        @arguments();
+    }
+}
+
+.animation(@arguments) {
+    -webkit-animation: @arguments;
+    -moz-animation: @arguments;
+    -o-animation: @arguments;
+    animation: @arguments;
+}
+
+.blockLink {
+    background-color: #fff;
+    box-shadow: 0 0 5px #a8a8a8;
+    transition: box-shadow ease-in 300ms;
+    margin-bottom: 15px;
+    > a {
+        display: inline-block;
+        width: 100%;
+        padding: 8px;
+        font-size: 12px;
+        text-align: center;
+        transition: font-weight ease-in 300ms;
+        &:hover {
+            font-weight: bold;
+        }
+    }
+    &:hover {
+        box-shadow: 0 0 16px #aaa;
+    }
+    .keyframes(fadeIn;{0% {opacity: 0} 60% {opacity: 0} 100% {opacity: 1}});
+
+    .animation(fadeIn 3s ease-in-out 1 alternate);
+}

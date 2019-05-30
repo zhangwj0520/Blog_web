@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2018-02-04 07:33:22
- * @LastEditTime: 2019-05-30 10:39:32
+ * @LastEditTime: 2019-05-30 11:49:15
  * @Description:
  **/
 
@@ -60,8 +60,8 @@ class HeaderNav extends Component {
             { key: '', text: '主页' },
             { key: 'article', text: '文章' },
             { key: 'timeline', text: '归档' },
-            { key: 'gather', text: '点滴' },
-            { key: 'gossip', text: '慢生活' }
+            { key: 'gather', text: '点滴' }
+            // { key: 'gossip', text: '慢生活' }
         ];
 
         let Search = Input.Search;

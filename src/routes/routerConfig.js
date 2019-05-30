@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 13:44:20
- * @LastEditTime: 2019-05-28 15:33:19
+ * @LastEditTime: 2019-05-30 11:49:11
  * @Description:
  **/
 import Loadable from '../components/asyncComponent';
@@ -24,6 +24,24 @@ const routerConfig = [
         exact: true,
         title: '首页',
         component: Loadable(() => import('../pages/HomeBlog'))
+    },
+    {
+        pathname: '/article',
+        exact: true,
+        title: '文章',
+        component: Loadable(() => import('../pages/Articles'))
+    },
+    {
+        pathname: '/timeline',
+        exact: true,
+        title: '归档',
+        component: Loadable(() => import('../pages/TimeLine'))
+    },
+    {
+        pathname: '/gather',
+        exact: true,
+        title: '点滴',
+        component: Loadable(() => import('../pages/Gather'))
     }
 ];
 

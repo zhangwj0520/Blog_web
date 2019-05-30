@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-29 17:38:24
- * @LastEditTime: 2019-05-30 11:40:03
+ * @LastEditTime: 2019-05-30 15:11:30
  * @Description:
  **/
 import React, { useState } from 'react';
@@ -169,7 +169,7 @@ const NavSide = props => {
                     {links &&
                         links.map((item, index) =>
                             index < 9 ? (
-                                <li key={index} style={{ 'list-style': 'square' }}>
+                                <li key={index} style={{ listStyle: 'square' }}>
                                     <Link to={`/article/${item._id}`}>{item.title}</Link>
                                 </li>
                             ) : null
