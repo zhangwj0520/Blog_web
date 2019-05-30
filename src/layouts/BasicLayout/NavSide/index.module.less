@@ -1,0 +1,127 @@
+@main-color: #3197ef;
+.sideBar {
+    .card {
+        margin-bottom: 20px;
+        cursor: default;
+        box-shadow: 0 0 5px #555;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 4px 7px;
+        margin: 3px;
+        color: #fff;
+        border-radius: 5px;
+    }
+
+    .cardTitle {
+        font-size: 25px;
+        font-weight: 600;
+        color: rgba(0, 0, 0, 0.85);
+        text-align: center;
+    }
+    .authorImg {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .authorImg img {
+        margin-top: -80px;
+        width: 110px;
+        height: 110px;
+        border-radius: 100%;
+        transition: transform 0.8s ease-in-out;
+    }
+    .authorImg img:hover {
+        transform: rotate(360deg);
+    }
+
+    .abstract {
+        color: rgb(48, 44, 44);
+        font-size: 13px;
+    }
+    .spliter {
+        border-left: 1px solid #aaa;
+    }
+    .statisticItem {
+        display: inline-block;
+        margin: 3px 9px 1px;
+    }
+
+    .aboutMe {
+        display: flex;
+        justify-content: space-between;
+        a {
+            color: #555;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 1px solid rgba(60, 60, 60, 0.1);
+            font-family: iconfont;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            &:hover {
+                background-color: #333;
+                color: white;
+            }
+        }
+    }
+    .iconWrp {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .icon-git {
+        transition: all 0.5s ease;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid rgb(236, 236, 236);
+        font-size: 2rem;
+        margin: 5px;
+    }
+    .icon-git:hover {
+        color: rgb(236, 236, 236);
+        background-color: #444;
+    }
+    .icon-git a:hover {
+        color: #fff;
+    }
+    .icon-git a {
+        color: #767676;
+    }
+
+    .list {
+        ol {
+            margin: 0 -20px;
+            li {
+                // list-style: decimal-leading-zero inside;
+                list-style: decimal inside;
+                color: @main-color;
+                a {
+                    margin-left: 5px;
+                }
+            }
+        }
+        ul {
+            margin: 0 -20px;
+            li {
+                list-style: circle inside;
+                color: @main-color;
+            }
+        }
+    }
+}
+@media (max-width: 767px) {
+    .Sidebar {
+        margin-top: 10px;
+    }
+}

@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 13:50:04
- * @LastEditTime: 2019-05-29 10:06:21
+ * @LastEditTime: 2019-05-30 09:43:45
  * @Description:
  **/
 import React, { Component } from 'react';
@@ -12,7 +12,7 @@ import _ from 'lodash';
 import routerData from '../../routes/routerConfig';
 import Footer from './Footer';
 import Header from './Header';
-import Sidebar from './Sidebar';
+import NavSide from './NavSide';
 import Banner from './Banner';
 import Breadcrumb from './Breadcrumb';
 
@@ -69,7 +69,7 @@ class UserLayout extends Component {
                                     </Switch>
                                 </Col>
                                 <Col xs={24} sm={6}>
-                                    {/* <NavSide /> */}
+                                    <NavSide />
                                 </Col>
                             </Row>
                         </Content>
