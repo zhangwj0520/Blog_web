@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 13:44:20
- * @LastEditTime: 2019-05-31 08:11:11
+ * @LastEditTime: 2019-05-31 13:49:52
  * @Description:
  **/
 import Loadable from '../components/asyncComponent';
