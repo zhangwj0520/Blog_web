@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 13:50:04
- * @LastEditTime: 2019-05-31 13:50:13
+ * @LastEditTime: 2019-05-31 13:57:22
  * @Description:
  **/
 import React, { Component } from 'react';
@@ -67,7 +67,7 @@ class UserLayout extends Component {
 
     render() {
         const { title, theme, collapsed, visible } = this.state;
-        console.log(this.props);
+        // console.log(this.props);
 
         return (
             <DocumentTitle title={title ? `管理系统-${title}` : '管理系统'}>

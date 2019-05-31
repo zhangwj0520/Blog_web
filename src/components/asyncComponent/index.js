@@ -1,15 +1,17 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 11:37:33
- * @LastEditTime: 2019-05-28 13:29:22
+ * @LastEditTime: 2019-05-31 16:00:31
  * @Description:
  **/
 
 import React from 'react';
 import NProgress from 'nprogress';
+// import NProgress from '../PageProgress/nprogress';  //为啥不可以
 import { injectReducer } from '../../store/reducerFunc';
 import Loading from '../PageLoading';
 import ErrorComponent from '../ErrorPage';
+import '../PageProgress/nprogress.css'; //这个样式必须引入
 
 NProgress.configure({ showSpinner: true });
 
@@ -43,7 +45,9 @@ function load(opts) {
                 injectReducer(module.default.reducer, reducers);
             }
 
+            // NProgress.set(0.99);
             NProgress.done();
+            console.log('结束');
             return loaded;
         })
         .catch(err => {
@@ -83,6 +87,7 @@ function createLoadableComponent(loadFn, options) {
             super(props);
             if (!res) {
                 //进度条
+                console.log('进度条');
                 NProgress.start();
                 res = loadFn(opts);
             }
