@@ -1,17 +1,17 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-29 17:38:24
- * @LastEditTime: 2019-05-30 15:11:30
+ * @LastEditTime: 2019-05-31 10:25:05
  * @Description:
  **/
 import React, { useState } from 'react';
 import { Card, Tag, Tooltip, Modal } from 'antd';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 
 import portraitBg from '../../../assets/image/portrait_bg.jpg';
 import meImg from '../../../assets/image/me.jpg';
 import styles from './index.module.less';
+import MyIcon from '../../../components/MyIcon';
 
 const { Meta } = Card;
 
@@ -73,7 +73,6 @@ const NavSide = props => {
                             <p className={styles.abstract}>斤斤计对对点点滴滴军军军军</p>
                             <p className={styles.abstract}>
                                 <span className={styles.statisticItem}>文章 : {ArticleNum}</span>
-                                {/* <span style={{ marginRight: 5, marginLeft: 5 }}>|</span> */}
                                 <span className={styles.spliter} />
                                 <span className={styles.statisticItem}>访问 :{totalAccess}</span>
                             </p>
@@ -87,20 +86,17 @@ const NavSide = props => {
                     <div className={styles.aboutMe}>
                         <Tooltip title="github">
                             <a href="https://github.com/zhangwj0520" target="view_window">
-                                <span className={classNames('iconfont', 'icon-github')} />
+                                <MyIcon type="icon-github" />
                             </a>
                         </Tooltip>
                         <Tooltip title="微信">
                             <a href="###" onClick={open}>
-                                <span className={classNames('iconfont', 'icon-wechat')} />
+                                <MyIcon type="icon-wechat" />
                             </a>
                         </Tooltip>
                         <Tooltip title="github">
                             <a href="https://github.com/zhangwj0520" target="view_window">
-                                <span
-                                    className={classNames('iconfont', 'icon-github')}
-                                    style={{ transform: 'rotate(90deg)' }}
-                                />
+                                <MyIcon type="icon-github" style={{ transform: 'rotate(90deg)' }} />
                             </a>
                         </Tooltip>
                         <Tooltip
@@ -114,7 +110,7 @@ const NavSide = props => {
                                 />
                             }>
                             <a href="###">
-                                <span className={classNames('iconfont', 'icon-wechat')} />
+                                <MyIcon type="icon-github" />
                             </a>
                         </Tooltip>
                     </div>
