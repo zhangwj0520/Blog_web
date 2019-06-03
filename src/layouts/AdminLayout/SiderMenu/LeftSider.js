@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-30 19:00:03
- * @LastEditTime: 2019-05-31 13:40:37
+ * @LastEditTime: 2019-05-31 16:29:11
  * @Description:
  **/
 import React from 'react';
@@ -49,13 +49,7 @@ const BaseMenu = ({ theme, handleChangeTheme, collapsed, width }) => {
                     />
                 </div>
             </div>
-            <Menu
-                theme={theme}
-                mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                // style={{ height: '100%' }}
-            >
+            <Menu theme={theme} mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}>
                 {generateMenu(adminRouter)}
             </Menu>
         </Sider>

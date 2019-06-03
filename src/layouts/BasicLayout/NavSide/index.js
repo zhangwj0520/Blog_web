@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-29 17:38:24
- * @LastEditTime: 2019-05-31 10:25:05
+ * @LastEditTime: 2019-06-01 07:00:41
  * @Description:
  **/
 import React, { useState } from 'react';
@@ -103,7 +103,7 @@ const NavSide = props => {
                             title={
                                 <img
                                     className="wx"
-                                    src="https://www.zhangweijie.com.cn/weChat.jpg?Expires=1559129861&OSSAccessKeyId=TMP.AgEczaX62X09fnClMRRufdrn-pBRY6XSMO19Uy0KKaG0daWsIMi8PH9WnAkpAAAwLAIUNdK5QOOU6FgxLglMWhoxkPkHcQECFGCdG8XeU2Z2lnl9z7jZoHzXd8FG&Signature=XkJ8dG3warV4tSj6z%2BTx2MNnDEU%3D"
+                                    src="https://blog-zwj.oss-cn-beijing.aliyuncs.com/weChat.jpg"
                                     alt="微信"
                                     width={100}
                                     height={100}
@@ -176,7 +176,7 @@ const NavSide = props => {
                 <img
                     alt="example"
                     style={{ width: '100%' }}
-                    src="http://www.zhangweijie.com.cn/weChat.jpg?Expires=1559187746&OSSAccessKeyId=TMP.AgEjjnhRLegOPCj-G0worUWlccyvp62MglQl5u2JDjA-1EDRG7ZQJg2xtWMNMC4CFQCTnhHULPD8A6rogaN8H9ggKskYcgIVANtcJslzo8jbvxs-P-agSXDmpl2G&Signature=IzvJKuw%2BAqiY5RI%2FgxzjOmkwgE0%3D"
+                    src="https://blog-zwj.oss-cn-beijing.aliyuncs.com/weChat.jpg"
                 />
             </Modal>
         </div>

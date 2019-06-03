@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 13:50:04
- * @LastEditTime: 2019-05-31 13:57:22
+ * @LastEditTime: 2019-05-31 16:23:42
  * @Description:
  **/
 import React, { Component } from 'react';
@@ -11,11 +11,13 @@ import { BackTop, Col, Layout, Row } from 'antd';
 import _ from 'lodash';
 
 import SiderMenu from './SiderMenu';
-import MyIcon from '../../components/MyIcon';
+import Header from './Header';
+import Footer from '../BasicLayout/Footer';
 
 import routerData from '../../routes/routerConfig';
 import styles from './style.module.less';
-const { Content, Header } = Layout;
+const { Content } = Layout;
+
 @withRouter
 class UserLayout extends Component {
     constructor(props) {
@@ -83,40 +85,14 @@ class UserLayout extends Component {
                         />
 
                         <Layout>
-                            <Header className={styles.header}>
-                                <Row>
-                                    <Col xs={2} sm={0}>
-                                        <div className={styles.logo} id="logo">
-                                            <img
-                                                src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-                                                alt="logo"
-                                            />
-                                        </div>
-                                    </Col>
-                                    <Col xs={0} sm={2}>
-                                        <MyIcon
-                                            type={collapsed ? 'icon-menu-fold' : 'icon-menu-unfold'}
-                                            onClick={this.toggleCollapsed}
-                                            style={{ fontSize: 20, marginLeft: 20, marginTop: 24 }}
-                                        />
-                                    </Col>
-                                    <Col xs={2} sm={0}>
-                                        <MyIcon
-                                            type={visible ? 'icon-menu-unfold' : 'icon-menu-fold'}
-                                            onClick={this.showDrawer}
-                                            style={{ fontSize: 20, marginLeft: 20, marginTop: 24 }}
-                                        />
-                                    </Col>
-                                </Row>
-                            </Header>
-                            <Content
-                                style={{
-                                    margin: '24px 16px',
-                                    padding: 24,
-                                    background: '#fff',
-                                    minHeight: 280
-                                }}>
-                                Content
+                            <Header
+                                collapsed={collapsed}
+                                visible={visible}
+                                toggleCollapsed={this.toggleCollapsed}
+                                showDrawer={this.showDrawer}
+                            />
+
+                            <Content className={styles.content}>
                                 <Switch>
                                     {routerData.map((item, index) => {
                                         return item.component ? (
@@ -130,6 +106,7 @@ class UserLayout extends Component {
                                     })}
                                 </Switch>
                             </Content>
+                            <Footer />
                         </Layout>
                     </Layout>
                 </Layout>

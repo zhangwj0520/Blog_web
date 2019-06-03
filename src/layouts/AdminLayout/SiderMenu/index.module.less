@@ -1,5 +1,6 @@
 .sider {
     height: 100vh;
+    // background: rgba(0, 0, 0, 0);
 }
 .logo {
     height: 46px;
@@ -31,10 +32,16 @@
 }
 .changeTheme {
     background: rgba(210, 218, 213, 0.836);
-    width: 100%;
+    width: 200px;
     height: 50px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     padding: 15px;
     text-align: center;
+}
+
+@media (max-width: 768px) {
+    .changeTheme {
+        width: 150px;
+    }
 }
