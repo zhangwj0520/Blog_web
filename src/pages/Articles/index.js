@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 13:45:17
- * @LastEditTime: 2019-05-30 15:31:11
+ * @LastEditTime: 2019-06-03 15:33:23
  * @Description:
  **/
 import React, { useState, useEffect } from 'react';
@@ -25,18 +25,19 @@ const Article = ({ isHome }) => {
     const [pageIndex, setPageIndex] = useState(1);
     const [pageSize, setPageSize] = useState(initPageSize);
 
-    const { result, fetchData, isLoading, fetchStatus, total, data } = HookGet(
+    const [fetchData, data] = HookGet(
+        // const { result, fetchData, isLoading, fetchStatus, total, data } = HookGet(
         'http://www.hanyuehui.site/get-articles'
     );
 
     useEffect(() => {
-        fetchData({ count: pageSize, current: pageIndex });
+        // fetchData({ count: pageSize, current: pageIndex });
     }, [pageIndex, pageSize]);
 
     useEffect(() => {
         // console.log({pageIndex, pageSize, ...query});
-        console.log(result);
-    }, [result]);
+        // console.log(result);
+    }, [data]);
 
     const onChange = (pageIndex, pageSize) => {
         setPageIndex(pageIndex);

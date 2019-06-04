@@ -1,12 +1,17 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-31 17:20:44
- * @LastEditTime: 2019-06-03 11:49:50
+ * @LastEditTime: 2019-06-03 13:51:10
  * @Description:
  **/
 import React from 'react';
 import { Row, Col, Card } from 'antd';
 import styles from './index.module.less';
+import generateData from 'data-generator-retail';
+
+const data = generateData();
+// now do whatever you want with the data...
+console.log(data);
 
 const replaceHtml = /<(?:.|\s)*?>/g;
 export default function Dome4({ lastArticle, lastSay }) {

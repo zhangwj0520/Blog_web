@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-29 10:00:58
- * @LastEditTime: 2019-05-30 13:46:24
+ * @LastEditTime: 2019-06-04 14:46:09
  * @Description:
  **/
 import React, { useState, useEffect } from 'react';
@@ -10,14 +10,16 @@ import { Col, Row } from 'antd';
 import Banner from './banner';
 import bordImage from '../../../assets/image/bord.jpg';
 import styles from './style.module.less';
-import { HookGet } from '../../../common/fetch';
+import { HookGet, Fetch } from '../../../common/fetch';
+import { useAbortableFetch } from '../../../common/hooks';
 
 const str = '因为没有丰富阅历和经验！闲下来时多看看书，书本里的故事总有我要学的人生';
 
 const HomeBanner = () => {
     const [sentence, setSentence] = useState(str);
 
-    const { result, fetchData } = HookGet('https://v1.hitokoto.cn/');
+    const [fetchData, result] = Fetch('https://v1.hitokoto.cn/');
+    // const [fetchData, result] = HookGet('https://v1.hitokoto.cn/');
 
     /*  如果想执行只运行一次的 effect（仅在组件挂载和卸载时执行），
     可以传递一个空数组（[]）作为第二个参数。
@@ -29,12 +31,13 @@ const HomeBanner = () => {
         fetchData({ c: 'f' });
         fetchData({ c: 'f' });
         fetchData({ c: 'f' });
-        fetchData({ c: 'f' });
-        fetchData({ c: 'f' });
-        fetchData({ c: 'f' });
+        // fetchData({ c: 'f' });
+        // fetchData({ c: 'f' });
+        // fetchData({ c: 'f' });
     }, []);
 
     useEffect(() => {
+        console.log(result);
         result.hitokoto && setSentence(result.hitokoto);
     }, [result]);
 

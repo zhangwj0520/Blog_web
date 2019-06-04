@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-28 11:37:33
- * @LastEditTime: 2019-05-31 16:00:31
+ * @LastEditTime: 2019-06-03 14:55:42
  * @Description:
  **/
 
@@ -47,14 +47,13 @@ function load(opts) {
 
             // NProgress.set(0.99);
             NProgress.done();
-            console.log('结束');
             return loaded;
         })
         .catch(err => {
             state.loading = false;
             state.error = err;
             NProgress.done();
-            console.error(err);
+            // console.error(err);
             throw err;
         });
 
@@ -87,7 +86,6 @@ function createLoadableComponent(loadFn, options) {
             super(props);
             if (!res) {
                 //进度条
-                console.log('进度条');
                 NProgress.start();
                 res = loadFn(opts);
             }

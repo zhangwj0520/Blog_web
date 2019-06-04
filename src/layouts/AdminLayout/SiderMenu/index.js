@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-30 19:00:03
- * @LastEditTime: 2019-06-01 07:48:45
+ * @LastEditTime: 2019-06-03 14:44:44
  * @Description:
  **/
 import React from 'react';
@@ -16,10 +16,10 @@ const SiderMenu = React.memo(({ theme, collapsed, handleChangeTheme, visible, on
     return (
         <div style={{ height: '100vh' }}>
             <Row>
-                <Col xs={0} sm={24}>
+                <Col xs={0} sm={0} md={24}>
                     <LeftSider theme={theme} handleChangeTheme={handleChangeTheme} collapsed={collapsed} />
                 </Col>
-                <Col xs={24} sm={0}>
+                <Col xs={24} sm={24} md={0}>
                     <Drawer
                         // title="Basic Drawer"
                         placement={'left'}

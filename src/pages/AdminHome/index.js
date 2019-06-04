@@ -1,7 +1,7 @@
 /**
  * @LastEditors: zhang weijie
  * @Date: 2019-05-30 18:51:57
- * @LastEditTime: 2019-06-03 11:49:58
+ * @LastEditTime: 2019-06-03 15:59:54
  * @Description:
  **/
 import React, { useState, useEffect } from 'react';
@@ -44,15 +44,19 @@ const list = [
     }
 ];
 export default function Index() {
-    const { fetchData, isLoading, fetchStatus, result, total, data } = HookGet('/mock/blog/profile');
+    const [fetchData, data, total] = HookGet('/mock/blog/profile');
 
     useEffect(() => {
+        // console.log(fetchData);
         fetchData();
+        // fetchData();
+        // fetchData();
+        // fetchData();
     }, []);
     useEffect(() => {
-        console.log(result);
+        console.log(data);
         // console.log(getContent.result);
-    }, [result]);
+    }, []);
 
     return (
         <div>
@@ -85,9 +89,9 @@ export default function Index() {
                     </Col>
                 ))}
             </Row>
-            <Dome2 motto={result.motto} />
-            <Dome3 blogData={result.blogData || []} accessData={result.accessData || []} />
-            <Dome4 lastArticle={result.lastArticle || {}} lastSay={result.lastSay || {}} />
+            <Dome2 motto={data.motto} />
+            <Dome3 blogData={data.blogData || []} accessData={data.accessData || []} />
+            <Dome4 lastArticle={data.lastArticle || {}} lastSay={data.lastSay || {}} />
         </div>
     );
 }
