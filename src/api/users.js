@@ -7,10 +7,8 @@
 import axios from 'axios';
 
 export async function postUserRegister(params) {
-    // console.log(params);
     return axios({
-        url: '/v1/users',
-        // url: '/mock/user/register',
+        url: '/blog/user/register',
         method: 'post',
         data: params
     });

@@ -20,14 +20,10 @@ module.exports = function(app) {
         })
     );
     app.use(
-        proxy('/v2', {
-            // target: 'http://127.0.0.1:8989',
-            target: 'http://123.56.15.36:8977',
+        proxy('/blog', {
+            target: 'http://127.0.0.1:8999',
             secure: false,
-            changeOrigin: true,
-            pathRewrite: {
-                '^/v2': '/v1'
-            }
+            changeOrigin: true
         })
     );
 };

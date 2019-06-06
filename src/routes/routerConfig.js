@@ -6,7 +6,8 @@
  **/
 import client from './client';
 import admin from './admin';
+import user from './user';
 
-const routerConfig = [...client, ...admin];
+const routerConfig = [...client, ...admin, ...user];
 
 export default routerConfig;
