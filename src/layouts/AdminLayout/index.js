@@ -16,6 +16,8 @@ import Footer from '../BasicLayout/Footer';
 
 import routerData from '../../routes/routerConfig';
 import styles from './style.module.less';
+
+import { reduxRouter } from '../../common/utils';
 const { Content } = Layout;
 
 @withRouter
@@ -27,17 +29,25 @@ class UserLayout extends Component {
             isHome: false,
             theme: 'light', //主题
             collapsed: false, //collapsed
-            visible: false
+            visible: false,
+            token: ''
         };
     }
     static getDerivedStateFromProps(props, state) {
         const {
             location: { pathname }
         } = props;
+        const token = localStorage.Token;
         const res = _.find(routerData, { pathname });
         let title = res ? res.title : '';
         let isHome = title === '首页';
-        return { title, isHome };
+        return { title, isHome, token };
+    }
+    componentDidMount() {
+        const { token } = this.state;
+        if (!token) {
+            reduxRouter('/user/login');
+        }
     }
 
     changeTheme = value => {
@@ -65,11 +75,8 @@ class UserLayout extends Component {
         });
     };
 
-    componentDidMount() {}
-
     render() {
         const { title, theme, collapsed, visible } = this.state;
-        // console.log(this.props);
 
         return (
             <DocumentTitle title={title ? `管理系统-${title}` : '管理系统'}>

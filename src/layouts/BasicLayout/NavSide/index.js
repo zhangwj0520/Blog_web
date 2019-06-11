@@ -4,7 +4,7 @@
  * @LastEditTime: 2019-06-01 07:00:41
  * @Description:
  **/
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Tag, Tooltip, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -13,11 +13,24 @@ import meImg from '../../../assets/image/me.jpg';
 import styles from './index.module.less';
 import MyIcon from '../../../components/MyIcon';
 
+import { Fetch } from '../../../common/fetch';
+
 const { Meta } = Card;
 
 const colors = ['#f50', '#f8a72a', '#87d068', '#108ee9', '#6b61f0'];
 const NavSide = props => {
     const [visible, setVisible] = useState(false);
+    const [tags, setTags] = useState([]);
+    const [getTags, tagsData] = Fetch('/blog/tags');
+
+    useEffect(() => {
+        getTags();
+    }, [getTags]);
+    useEffect(() => {
+        tagsData && setTags(tagsData);
+        console.log(tags);
+    }, [tagsData, tags]);
+
     function open() {
         setVisible(true);
     }

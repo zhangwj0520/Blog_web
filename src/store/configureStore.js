@@ -11,12 +11,17 @@ import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
 import { makeRootReducer } from './reducerFunc';
 
+///saga
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './sagas';
+const sagaMiddleware = createSagaMiddleware();
+
 export const browserHistory = createBrowserHistory();
 const routingMiddleware = routerMiddleware(browserHistory);
 
 // export function configureStore() {
 const initialState = {};
-const middlewares = [thunk, routingMiddleware];
+const middlewares = [thunk, routingMiddleware, sagaMiddleware];
 if (process.env.NODE_ENV !== 'production') {
     middlewares.push(logger);
 }
@@ -31,7 +36,7 @@ const composeEnhancers =
         : compose;
 
 export const store = createStore(makeRootReducer(), initialState, composeEnhancers(...enhancers));
-
+sagaMiddleware.run(rootSaga);
 store.reducers = {};
 
 // return store;

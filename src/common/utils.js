@@ -61,6 +61,7 @@ export const checkDataStatus = json => {
  * 向服务端发送请求
  * @param {string} url 请求 url
  * @param {any} query  请求参数对象
+ * @param {string} "GET" "POST"  fetch方法(GET)
  * @return {any} 返回 json 格式数据
  *
  * ### 会自动处理
@@ -70,24 +71,48 @@ export const checkDataStatus = json => {
  *
  * 否则算**请求成功**：返回完整 json 数据
  */
-export const fetchData = async (url, query) => {
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
+export const fetchData = async (url, query, method = 'GET') => {
+    let initObj = {};
+    let newUrl = url;
+    if (method === 'GET') {
+        if (query) {
+            const queryStr = Object.keys(query)
+                .reduce((ary, key) => {
+                    query[key] && ary.push(encodeURIComponent(key) + '=' + encodeURIComponent(query[key]));
+                    return ary;
+                }, [])
+                .join('&');
+            newUrl = `${url}?${queryStr}`;
+        }
+        initObj = {
+            method: method,
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                Authorization: localStorage.getItem('reactToken')
+            }
+        };
+    } else {
+        initObj = {
+            method: method,
             mode: 'cors',
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
+                'X-Requested-With': 'XMLHttpRequest',
+                Authorization: localStorage.getItem('reactToken')
             },
             body: JSON.stringify(query)
-        });
+        };
+    }
+
+    try {
+        const response = await fetch(newUrl, initObj);
 
         let json = await checkHttpStatus(response);
         return json;
     } catch (error) {
         console.error(error);
-        // message.error(`请求失败：${error.message}`)
         return {
             success: false,
             msg: error.message,
@@ -188,9 +213,9 @@ export const pySegSort = arr => {
     let letters = 'abcdefghjklmnopqrstwxyz'.split('');
     let zh = '阿八嚓哒妸发旮哈讥咔垃痳拏噢妑七呥扨它穵夕丫帀'.split('');
     let segs = [];
-    letters.map((item, i) => {
+    letters.forEach((item, i) => {
         let cur = { letter: item, data: [] };
-        arr.map(item => {
+        arr.forEach(item => {
             if (item.localeCompare(zh[i]) >= 0 && item.localeCompare(zh[i + 1]) < 0) {
                 cur.data.push(item);
             }
@@ -216,4 +241,46 @@ export const escape2Html = str => {
     return str.replace(/&(lt|gt|nbsp|amp|quot);/gi, function(all, t) {
         return arrEntities[t];
     });
+};
+
+// 处理时间格式数据
+export const dateFormat = function(date, fmt) {
+    if (typeof date === 'string') {
+        date = new Date(date);
+    }
+
+    let o = {
+        'M+': date.getMonth() + 1, //月份
+        'd+': date.getDate(), //日
+        'h+': date.getHours() % 12 === 0 ? 12 : date.getHours() % 12, //小时
+        'H+': date.getHours(), //小时
+        'm+': date.getMinutes(), //分
+        's+': date.getSeconds(), //秒
+        'q+': Math.floor((date.getMonth() + 3) / 3), //季度
+        S: date.getMilliseconds() //毫秒
+    };
+    let week = {
+        '0': '/u65e5',
+        '1': '/u4e00',
+        '2': '/u4e8c',
+        '3': '/u4e09',
+        '4': '/u56db',
+        '5': '/u4e94',
+        '6': '/u516d'
+    };
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    if (/(E+)/.test(fmt)) {
+        fmt = fmt.replace(
+            RegExp.$1,
+            (RegExp.$1.length > 1 ? (RegExp.$1.length > 2 ? '/u661f/u671f' : '/u5468') : '') + week[date.getDay() + '']
+        );
+    }
+    for (let k in o) {
+        if (new RegExp('(' + k + ')').test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, RegExp.$1.length === 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length));
+        }
+    }
+    return fmt;
 };

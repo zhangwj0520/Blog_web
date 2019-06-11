@@ -148,12 +148,12 @@ export function HookPost(url) {
     };
 }
 
-export function Fetch(url, method = 'get') {
+export function Fetch(url, method = 'get', Authorization = true) {
     // 请求参数
     const [fetchStatus, setStatus] = useState(STATUS.INIT);
     const [total, setTotal] = useState(0);
-    const [data, setData] = useState({});
-    const [result, setResult] = useState({});
+    const [data, setData] = useState();
+    const [result, setResult] = useState();
     const controller = useRef(new AbortController());
     let fetchDataRef = useRef(async query => {
         controller.current.abort();
@@ -164,6 +164,7 @@ export function Fetch(url, method = 'get') {
             method: method,
             mode: 'cors'
         };
+
         let newUrl = url;
         if (method === 'get') {
             if (query) {
@@ -175,15 +176,28 @@ export function Fetch(url, method = 'get') {
                     .join('&');
                 newUrl = `${url}?${queryStr}`;
             }
+            if (Authorization) {
+                initObj = {
+                    signal: controller.current.signal,
+                    method: method,
+                    mode: 'cors',
+                    headers: {
+                        Authorization: localStorage.getItem('Token')
+                    }
+                };
+            }
         } else {
             initObj = {
-                credentials: 'include', //为了让浏览器发送包含凭据的请求
+                signal: controller.current.signal,
+                method: 'post',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
+                    'X-Requested-With': 'XMLHttpRequest',
+                    Authorization: localStorage.getItem('Token')
                 },
-                body: JSON.stringify(query),
-                ...initObj
+                mode: 'cors',
+                body: JSON.stringify(query)
             };
         }
 
@@ -194,7 +208,7 @@ export function Fetch(url, method = 'get') {
                 `请求参数 : %c${JSON.stringify(query)}`,
                 'color: #4CAF50; font-weight: bold; font-size: 1.2em;'
             );
-            console.log(`Get地址 : %c${newUrl}`, 'color: #4CAF50; font-weight: bold; font-size: 1.2em;');
+            console.log(`${method}地址 : %c${newUrl}`, 'color: #4CAF50; font-weight: bold; font-size: 1.2em;');
             console.groupEnd();
         }
 

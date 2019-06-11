@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Form, Input, Button, Icon, message as Message } from 'antd';
+import { Form, Input, Button, Icon, message } from 'antd';
 import styles from './Register.module.less';
 
 import { bindActionCreators } from 'redux';
@@ -32,21 +32,19 @@ class Register extends Component {
                 const { userName, passWord, phoneNumber } = values;
                 await userRigister({ userName, passWord, phoneNumber });
                 console.log(this.props);
-                // const {
-                //     usersState: {
-                //         status,
-                //         message,
-                //         user: { userName,passWord, phoneNumber }
-                //     }
-                // } = this.props;
-                // if (status === 200) {
-                //     Message.success(message);
-                //     history.push({
-                //         pathname: `/user/register-result`,
-                //         phone,
-                //         fullName
-                //     });
-                // }
+                const {
+                    usersState: { msg, success }
+                } = this.props;
+                if (success) {
+                    message.success(msg);
+                    history.push({
+                        pathname: `/user/register-result`,
+                        phoneNumber,
+                        userName
+                    });
+                } else {
+                    message.error(msg);
+                }
             }
         });
     };

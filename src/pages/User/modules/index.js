@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import jwt_decode from 'jwt-decode';
 import { postUserRegister, postUserLogin } from '../../../api/users';
 import { asyncActionCreator } from '../../../common/utils';
 
@@ -43,8 +44,8 @@ const userLoginActions = {
     failure: USER_LOGIN_FAILURE
 };
 export const userLogin = asyncActionCreator(userLoginActions, postUserLogin);
-const { authority, fullName, phone } = localStorage;
-let initialLoginState = { authority, fullName, phone };
+// const { authority, fullName, phone } = localStorage;
+let initialLoginState = {};
 export function userLoginReducer(state = initialLoginState, { type, payload }) {
     switch (type) {
         case USER_LOGIN_REQUEST:
@@ -52,17 +53,16 @@ export function userLoginReducer(state = initialLoginState, { type, payload }) {
                 ...payload
             });
         case USER_LOGIN_SUCCESS:
-            console.log(payload);
             //存储到ls
-            const { token, success, user } = payload;
+            const { token, success } = payload;
+
+            const decode = jwt_decode(token);
+            const { userName, identity, phoneNumber } = decode;
             if (success === true) {
-                const { fullName, phone, authority, avatarUrl } = user;
-                // console.log(jwt_decode(token));
-                localStorage.setItem('reactToken', token);
-                localStorage.setItem('fullName', fullName);
-                localStorage.setItem('phone', phone);
-                localStorage.setItem('authority', authority);
-                localStorage.setItem('avatarUrl', avatarUrl);
+                localStorage.setItem('Token', token);
+                localStorage.setItem('userName', userName);
+                localStorage.setItem('identity', identity);
+                localStorage.setItem('phoneNumber', phoneNumber);
             }
 
             return Object.assign({}, state, {

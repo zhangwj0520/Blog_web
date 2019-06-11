@@ -16,7 +16,7 @@ const str = '因为没有丰富阅历和经验！闲下来时多看看书，书�
 
 const HomeBanner = () => {
     const [sentence, setSentence] = useState(str);
-    const [fetchData, data, total, result] = Fetch('https://v1.hitokoto.cn/');
+    const [fetchData, data, total, result] = Fetch('https://v1.hitokoto.cn/', 'get', false);
 
     /*  如果想执行只运行一次的 effect（仅在组件挂载和卸载时执行），
     可以传递一个空数组（[]）作为第二个参数。
@@ -36,8 +36,7 @@ const HomeBanner = () => {
     }, [result]);
 
     useEffect(() => {
-        console.log(data);
-        setSentence(data.hitokoto);
+        data && data.hitokoto && setSentence(data.hitokoto);
     }, [data]);
 
     return (

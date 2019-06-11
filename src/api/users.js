@@ -4,7 +4,8 @@
  * @LastEditTime: 2019-05-28 14:22:15
  * @Description:
  **/
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../common/axios';
 
 export async function postUserRegister(params) {
     return axios({
@@ -15,10 +16,8 @@ export async function postUserRegister(params) {
 }
 
 export async function postUserLogin(params) {
-    // console.log(params);
     return axios({
-        // url: '/mock/user/login',
-        url: '/v1/users/login',
+        url: '/blog/user/login',
         method: 'post',
         data: params
     });

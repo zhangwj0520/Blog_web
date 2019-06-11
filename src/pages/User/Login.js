@@ -7,15 +7,16 @@ import styles from './Login.module.less';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { userLogin } from './modules';
+import { store } from '../../store/configureStore';
 
-const { Tab, Password, Mobile, Captcha, Submit } = Login;
+const { UserName, Tab, Password, Mobile, Captcha, Submit } = Login;
 class LoginPage extends Component {
     state = {
         type: 'account',
         autoLogin: true
     };
     componentWillMount() {
-        console.log(this.props);
+        // console.log(this.props);
     }
 
     onTabChange = type => {
@@ -44,12 +45,14 @@ class LoginPage extends Component {
         if (!err) {
             const { userLogin, history } = this.props;
             await userLogin(values);
+
             const {
                 usersState: { success, msg }
             } = this.props;
             if (success === true) {
-                history.push('/home');
-                message.success('登录成功');
+                store.dispatch({ type: 'USER_INFOS_UPDATE' }); //登录成功后redux 更新用户信息
+                history.push('/admin');
+                message.success(msg);
             } else {
                 message.error(msg);
             }
@@ -81,26 +84,7 @@ class LoginPage extends Component {
                         this.loginForm = form;
                     }}>
                     <Tab key="account" tab="密码登录">
-                        {/* {login.status === 'error' &&
-                            login.type === 'account' &&
-                            !submitting &&
-                            this.renderMessage(
-                                '账户或密码错误（admin/ant.design)'
-                            )} */}
-                        <Mobile
-                            name="phone"
-                            placeholder="手机号"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '请输入手机号码'
-                                },
-                                {
-                                    pattern: /^1\d{10}$/,
-                                    message: '手机号格式错误'
-                                }
-                            ]}
-                        />
+                        <UserName name="userName" placeholder="请输入用户名" />
                         <Password
                             name="passWord"
                             placeholder="密码"
@@ -122,7 +106,7 @@ class LoginPage extends Component {
                             !submitting &&
                             this.renderMessage('验证码错误')} */}
                         <Mobile
-                            name="phone"
+                            name="phoneNumber"
                             placeholder="手机号"
                             rules={[
                                 {

@@ -7,7 +7,7 @@
 import React from 'react';
 import { Icon } from 'antd';
 
-const scriptUrl = '//at.alicdn.com/t/font_1215529_8sjnyz1iqul.js'; // 在 iconfont.cn 上生成
+const scriptUrl = '//at.alicdn.com/t/font_1215529_q3hwni3vpcc.js'; // 在 iconfont.cn 上生成
 
 const Iconfont = Icon.createFromIconfontCN({
     scriptUrl

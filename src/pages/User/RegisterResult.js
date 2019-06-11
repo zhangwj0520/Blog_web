@@ -17,15 +17,18 @@ const actions = (
     </div>
 );
 
-const RegisterResult = ({ location, history }) => {
-    const phone = history.location.phone || '13912345678';
-    const fullname = history.location.fullname || '管理员';
+const RegisterResult = ({ location: { userName, phoneNumber } }) => {
     return (
         <Result
             className={styles.registerResult}
             type="success"
-            title={<div className={styles.title}>{phone}</div>}
-            description={`恭喜您 ${fullname} 已经注册成功!请联系管理员开通权限!!!`}
+            title={
+                <div>
+                    <div className={styles.title}>用户名:{userName}</div>
+                    <div className={styles.title}>手机号码:{phoneNumber}</div>
+                </div>
+            }
+            description={`恭喜您 ${userName} 已经注册成功!请联系管理员开通权限!!!`}
             actions={actions}
             style={{ marginTop: 56 }}
         />

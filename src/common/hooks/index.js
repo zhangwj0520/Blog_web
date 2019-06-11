@@ -17,7 +17,8 @@ import { AbortController as AbortControllerBackup } from './abortable';
  */
 export function useSetState(initState = {}) {
     const [state, replaceState] = useState(initState);
-    function setState(newState) {
+
+    const setState = useRef(function setState(newState) {
         if (typeof newState === 'function') {
             replaceState(prevState => ({
                 ...prevState,
@@ -29,8 +30,9 @@ export function useSetState(initState = {}) {
                 ...newState
             }));
         }
-    }
-    return [state, setState];
+    });
+
+    return [state, setState.current];
 }
 
 /**

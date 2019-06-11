@@ -4,39 +4,53 @@
  * @LastEditTime: 2019-06-03 14:32:18
  * @Description:
  **/
+import React, { useEffect } from 'react';
 import { Button, message, Modal, Table, Tag, Tooltip, Card } from 'antd';
-import React from 'react';
 import EditArticle from './EditArticle';
 import SearchForm from './SearchForm';
+import { useSetState } from '../../common/hooks';
+import { fetchData, checkDataStatus, dateFormat } from '../../common/utils';
+import _ from 'lodash';
 import './style.less';
 const confirm = Modal.confirm;
 
-class Articles extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            article: {},
-            visible: false
-        };
-    }
-    onChange = (pageIndex, pageSize) => {
-        // if (this.props.articles.isSearch === undefined) {
-        //     this.props.RequestArticles({ pageIndex, pageSize });
-        // } else {
-        //     this.props.SearchArticles({ ...this.props.articles.payload, pageIndex, pageSize });
-        // }
+const Articles = () => {
+    const [state, setState] = useSetState({
+        data: [],
+        article: {},
+        visible: false,
+        pageIndex: 1,
+        pageSize: 10,
+        query: {},
+        totalSize: 0,
+        tags: [],
+        isChangeTag: 0
+    });
+
+    const { data, article, visible, pageIndex, pageSize, query, totalSize, tags, isChangeTag } = state;
+    useEffect(() => {
+        fetchData('/blog/articles', { pageIndex, pageSize, ...query }).then(res => {
+            if (checkDataStatus(res)) {
+                console.log(res);
+                const { totalSize, data } = res;
+                setState({ data, totalSize });
+            }
+        });
+    }, [pageIndex, pageSize, setState, isChangeTag, query]);
+
+    useEffect(() => {
+        fetchData('/blog/tags').then(res => {
+            if (checkDataStatus(res)) {
+                setState({ tags: res.data });
+            }
+        });
+    }, [setState]);
+
+    const onChange = (pagination, filters, sorter) => {
+        const { current, pageSize } = pagination;
+        setState({ pageIndex: current, pageSize });
     };
-    onShowSizeChange = (pageIndex, pageSize) => {
-        // if (this.props.articles.isSearch === undefined) {
-        //     this.props.RequestArticles({ pageIndex, pageSize });
-        // } else {
-        //     this.props.SearchArticles({ ...this.props.articles.payload, pageIndex, pageSize });
-        // }
-    };
-    componentDidMount() {
-        // this.props.RequestArticles({ pageIndex: 1, pageSize: 5 });
-    }
-    deleteArticle = id => {
+    const deleteArticle = id => {
         confirm({
             cancelText: '取消',
             okText: '确定',
@@ -53,120 +67,120 @@ class Articles extends React.Component {
             }
         });
     };
-    editArticle = article => {
-        this.toggleVisible(true);
-        this.setState({ article: article });
+    const editArticle = article => {
+        setState({ visible: true, article });
     };
-    toggleVisible = boolean => {
-        this.setState({ visible: boolean });
-    };
-    render() {
-        // const { articles, payload, isSearch, len } = this.props.articles;
-        const articles = [];
-        const [pageIndex, pageSize] = [1, 10];
-        const total = 12;
-
-        const columns = [
-            {
-                key: 'nature',
-                render: text => <h4>{text.nature}</h4>,
-                title: '文章类型'
-            },
-            {
-                key: 'title',
-                render: text => <h4>{text.title}</h4>,
-                title: '文章标题'
-            },
-            {
-                key: 'abstract',
-                render: _ => (
-                    <Tooltip title={_.abstract}>
-                        <p className="abstract">{_.abstract}</p>
-                    </Tooltip>
-                ),
-                title: '文章简介'
-            },
-            {
-                key: 'tag',
-                render: _ => {
-                    if (typeof _.tag === 'string') {
-                        return <Tag key={_.tag}>{_.tag}</Tag>;
-                    } else {
-                        return (
-                            <Tag key={_.tag.title} color={_.tag.color}>
-                                {_.tag.title}
-                            </Tag>
-                        );
-                    }
-                },
-                title: '标签'
-            },
-            {
-                dataIndex: 'type',
-                key: 'type',
-                title: '分类'
-            },
-            {
-                key: 'create_at',
-                render: _ => <span>{new Date(_.create_at).toLocaleDateString()}</span>,
-                title: '发表时间'
-            },
-            {
-                align: 'center',
-                dataIndex: 'access',
-                key: 'access',
-                title: '浏览数量'
-            },
-            {
-                key: 'action',
-                render: _ => (
-                    <span>
-                        <Button
-                            icon="edit"
-                            type="primary"
-                            size="small"
-                            style={{ marginRight: 10 }}
-                            onClick={() => this.editArticle(_)}>
-                            编辑
-                        </Button>
-                        <Button icon="delete" type="danger" size="small" onClick={() => this.deleteArticle(_._id)}>
-                            删除
-                        </Button>
-                    </span>
-                ),
-                title: '操作'
-            }
-        ];
-        return (
-            <Card>
-                <EditArticle
-                    {...this.state.article}
-                    toggleVisible={this.toggleVisible}
-                    visible={this.state.visible}
-                    editArticle={this.editArticle}
-                />
-                <div className="search-form">
-                    <SearchForm />
-                </div>
-                <Table
-                    scroll={{ x: 1000 }}
-                    columns={columns}
-                    bordered={true}
-                    dataSource={articles}
-                    rowKey="_id"
-                    pagination={{
-                        defaultPageSize: 5,
-                        pageSizeOptions: ['5', '10', '15', '20'],
-                        current: Number(pageIndex),
-                        onChange: this.onChange,
-                        onShowSizeChange: this.onShowSizeChange,
-                        pageSize: Number(pageSize),
-                        showSizeChanger: true,
-                        total
-                    }}
-                />
-            </Card>
-        );
+    function close() {
+        setState({ visible: false });
     }
-}
+
+    const columns = [
+        {
+            dataIndex: '_id',
+            title: '序号',
+            render: (text, row, index) => index + 1
+        },
+        {
+            dataIndex: 'nature',
+            title: '文章类型',
+            render: text => <h4>{text}</h4>
+        },
+        {
+            dataIndex: 'title',
+            title: '文章标题',
+            render: text => <h4>{text}</h4>
+        },
+        {
+            dataIndex: 'abstract',
+            title: '文章简介',
+            render: val => (
+                <Tooltip title={val}>
+                    <p className="abstract">{val}</p>
+                </Tooltip>
+            )
+        },
+        {
+            dataIndex: 'tag',
+            title: '标签',
+            render: (val, row) =>
+                val.map(item => {
+                    let index = _.findIndex(tags, ['value', item]);
+                    let color = '#FFF';
+                    if (index > -1) {
+                        color = tags[index].color;
+                    }
+                    return (
+                        <Tag key={item} color={color}>
+                            {item}
+                        </Tag>
+                    );
+                })
+        },
+        {
+            dataIndex: 'type',
+            title: '分类'
+        },
+        {
+            dataIndex: 'create_at',
+            title: '发表时间',
+            render: val => dateFormat(val, 'yyyy-MM-dd HH:mm:ss')
+            // render: val => <span>{new Date(val).toLocaleString()}</span>
+        },
+        {
+            align: 'center',
+            dataIndex: 'access',
+            title: '浏览数量'
+        },
+        {
+            dataIndex: 'action',
+            render: (val, row) => (
+                <span>
+                    <Button
+                        icon="edit"
+                        type="primary"
+                        size="small"
+                        style={{ marginRight: 10 }}
+                        onClick={() => editArticle(row)}>
+                        编辑
+                    </Button>
+                    <Button icon="delete" type="danger" size="small" onClick={deleteArticle}>
+                        删除
+                    </Button>
+                </span>
+            ),
+            title: '操作'
+        }
+    ];
+    return (
+        <Card>
+            <EditArticle
+                article={article}
+                visible={visible}
+                close={close}
+                tags={tags}
+                editArticle={editArticle}
+                setState={setState}
+            />
+            <div className="search-form">
+                <SearchForm setState={setState} />
+            </div>
+            <Table
+                scroll={{ x: 1000 }}
+                columns={columns}
+                bordered={true}
+                dataSource={data}
+                rowKey="_id"
+                onChange={onChange}
+                pagination={{
+                    defaultPageSize: 5,
+                    pageSizeOptions: ['5', '10', '15', '20'],
+                    current: pageIndex,
+                    pageSize: pageSize,
+                    showSizeChanger: true,
+                    total: totalSize
+                }}
+            />
+        </Card>
+    );
+};
 export default Articles;
