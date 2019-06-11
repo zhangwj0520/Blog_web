@@ -32,7 +32,7 @@ const HomeBanner = () => {
 
     useEffect(() => {
         //这是为了显示abost
-        console.log(result);
+        // console.log(result);
     }, [result]);
 
     useEffect(() => {

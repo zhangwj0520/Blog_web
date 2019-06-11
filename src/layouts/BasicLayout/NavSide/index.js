@@ -4,32 +4,26 @@
  * @LastEditTime: 2019-06-01 07:00:41
  * @Description:
  **/
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Card, Tag, Tooltip, Modal } from 'antd';
 import { Link } from 'react-router-dom';
+import { context } from '../../../store/context-hooks';
 
 import portraitBg from '../../../assets/image/portrait_bg.jpg';
 import meImg from '../../../assets/image/me.jpg';
 import styles from './index.module.less';
 import MyIcon from '../../../components/MyIcon';
 
-import { Fetch } from '../../../common/fetch';
-
 const { Meta } = Card;
 
 const colors = ['#f50', '#f8a72a', '#87d068', '#108ee9', '#6b61f0'];
 const NavSide = props => {
-    const [visible, setVisible] = useState(false);
-    const [tags, setTags] = useState([]);
-    const [getTags, tagsData] = Fetch('/blog/tags');
+    const {
+        globalState: { tags, artTypes }
+    } = useContext(context);
+    console.log(tags);
 
-    useEffect(() => {
-        getTags();
-    }, [getTags]);
-    useEffect(() => {
-        tagsData && setTags(tagsData);
-        console.log(tags);
-    }, [tagsData, tags]);
+    const [visible, setVisible] = useState(false);
 
     function open() {
         setVisible(true);
@@ -52,23 +46,13 @@ const NavSide = props => {
         { id: 4, title: 'title4' },
         { id: 4, title: 'title4' }
     ];
-    const category = [
-        { id: 1, title: 'category1' },
-        { id: 2, title: 'category2' },
-        { id: 3, title: 'category3' },
-        { id: 4, title: 'category4' },
-        { id: 4, title: 'category5' },
-        { id: 4, title: 'category6' },
-        { id: 4, title: 'category7' },
-        { id: 4, title: 'category8' }
-    ];
+
     const links = [
         { id: 1, title: '哈哈哈' },
         { id: 2, title: '呼呼哟' },
         { id: 3, title: '嘻嘻嘻' },
         { id: 4, title: '你好女女女女' }
     ];
-    const tag = ['node', 'react', 'vue'];
 
     return (
         <div className={styles.sideBar}>
@@ -144,32 +128,23 @@ const NavSide = props => {
             </Card>
             <Card hoverable className={[styles.card, styles.list]} title="文章分类">
                 <ul>
-                    {category &&
-                        category.map((item, index) => (
+                    {artTypes &&
+                        artTypes.map((item, index) => (
                             <li key={index}>
-                                <Link to={`/article/${item._id}`}>{item.title}</Link>
+                                <Link to={`/article?artType=${item.value}`}>{item.value}</Link>
                             </li>
                         ))}
                 </ul>
             </Card>
 
             <Card hoverable className={styles.card} title="云标签">
-                {tag &&
-                    tag.map((item, index) => (
-                        <Tag
-                            key={item}
-                            color={item.color}
-                            className={styles.tag}
-                            style={{ backgroundColor: colors[index % 5] }}
-                            onClick={() =>
-                                //获取响应标签的数据
-                                this.props.fetchArticle({
-                                    pageIndex: 1,
-                                    pageSize: 10,
-                                    tagTitle: item
-                                })
-                            }>
-                            <Link to="/"> {item}</Link>
+                {tags &&
+                    tags.map((item, index) => (
+                        <Tag key={item.value} className={styles.tag}>
+                            <Link to={`/article?tag=${item.value}`}>
+                                <MyIcon type={item.icon} />
+                                <span style={{ color: item.color }}>{item.value}</span>
+                            </Link>
                         </Tag>
                     ))}
             </Card>

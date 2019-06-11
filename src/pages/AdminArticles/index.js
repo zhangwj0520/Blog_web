@@ -1,10 +1,5 @@
-/**
- * @LastEditors: zhang weijie
- * @Date: 2019-06-03 14:18:30
- * @LastEditTime: 2019-06-03 14:32:18
- * @Description:
- **/
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { context } from '../../store/context-hooks';
 import { Button, message, Modal, Table, Tag, Tooltip, Card } from 'antd';
 import EditArticle from './EditArticle';
 import SearchForm from './SearchForm';
@@ -15,6 +10,11 @@ import './style.less';
 const confirm = Modal.confirm;
 
 const Articles = () => {
+    const {
+        globalState,
+        globalState: { tags }
+    } = useContext(context); //获取hooks全局状态
+    // console.log(globalState);
     const [state, setState] = useSetState({
         data: [],
         article: {},
@@ -23,28 +23,19 @@ const Articles = () => {
         pageSize: 10,
         query: {},
         totalSize: 0,
-        tags: [],
         isChangeTag: 0
     });
 
-    const { data, article, visible, pageIndex, pageSize, query, totalSize, tags, isChangeTag } = state;
+    const { data, article, visible, pageIndex, pageSize, query, totalSize, isChangeTag } = state;
     useEffect(() => {
         fetchData('/blog/articles', { pageIndex, pageSize, ...query }).then(res => {
             if (checkDataStatus(res)) {
-                console.log(res);
+                // console.log(res);
                 const { totalSize, data } = res;
                 setState({ data, totalSize });
             }
         });
     }, [pageIndex, pageSize, setState, isChangeTag, query]);
-
-    useEffect(() => {
-        fetchData('/blog/tags').then(res => {
-            if (checkDataStatus(res)) {
-                setState({ tags: res.data });
-            }
-        });
-    }, [setState]);
 
     const onChange = (pagination, filters, sorter) => {
         const { current, pageSize } = pagination;

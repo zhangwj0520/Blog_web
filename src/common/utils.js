@@ -284,3 +284,10 @@ export const dateFormat = function(date, fmt) {
     }
     return fmt;
 };
+
+//延迟
+export const sleep = wait => {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(), wait);
+    });
+};

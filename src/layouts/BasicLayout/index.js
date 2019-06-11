@@ -41,7 +41,6 @@ class UserLayout extends Component {
 
     render() {
         const { title, isHome } = this.state;
-        console.log(this.props);
 
         return (
             <DocumentTitle title={title ? `张为杰的博客-${title}` : '张为杰的博客'}>
