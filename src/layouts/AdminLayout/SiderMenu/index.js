@@ -12,12 +12,17 @@ import LeftSider from './LeftSider';
 
 const drawerWidth = 150;
 
-const SiderMenu = React.memo(({ theme, collapsed, handleChangeTheme, visible, onClose }) => {
+const SiderMenu = React.memo(({ theme, collapsed, handleChangeTheme, visible, onClose, width }) => {
     return (
-        <div style={{ height: '100vh' }}>
+        <div style={{ maxHeight: '100vh' }}>
             <Row>
                 <Col xs={0} sm={0} md={24}>
-                    <LeftSider theme={theme} handleChangeTheme={handleChangeTheme} collapsed={collapsed} />
+                    <LeftSider
+                        theme={theme}
+                        handleChangeTheme={handleChangeTheme}
+                        collapsed={collapsed}
+                        width={width}
+                    />
                 </Col>
                 <Col xs={24} sm={24} md={0}>
                     <Drawer
@@ -33,7 +38,8 @@ const SiderMenu = React.memo(({ theme, collapsed, handleChangeTheme, visible, on
                             theme={theme}
                             handleChangeTheme={handleChangeTheme}
                             collapsed={collapsed}
-                            width={drawerWidth}
+                            drawerWidth={drawerWidth}
+                            onClose={onClose}
                         />
                     </Drawer>
                 </Col>

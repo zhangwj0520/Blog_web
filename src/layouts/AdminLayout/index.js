@@ -1,24 +1,19 @@
-/**
- * @LastEditors: zhang weijie
- * @Date: 2019-05-28 13:50:04
- * @LastEditTime: 2019-05-31 16:23:42
- * @Description:
- **/
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import DocumentTitle from 'react-document-title';
-import { BackTop, Col, Layout, Row } from 'antd';
+import { BackTop, Layout } from 'antd';
 import _ from 'lodash';
 
 import SiderMenu from './SiderMenu';
 import Header from './Header';
-import Footer from '../BasicLayout/Footer';
 
 import routerData from '../../routes/routerConfig';
 import styles from './style.module.less';
 
 import { reduxRouter } from '../../common/utils';
 const { Content } = Layout;
+
+const Footer = React.lazy(() => import('./Footer'));
 
 @withRouter
 class UserLayout extends Component {
@@ -30,7 +25,8 @@ class UserLayout extends Component {
             theme: 'light', //主题
             collapsed: false, //collapsed
             visible: false,
-            token: ''
+            token: '',
+            width: '200px'
         };
     }
     static getDerivedStateFromProps(props, state) {
@@ -58,8 +54,11 @@ class UserLayout extends Component {
 
     //pc导航
     toggleCollapsed = () => {
+        const { collapsed } = this.state;
+        let width = collapsed ? '200px' : '80px';
         this.setState({
-            collapsed: !this.state.collapsed
+            collapsed: !collapsed,
+            width
         });
     };
     //Mobile 抽屉
@@ -76,46 +75,48 @@ class UserLayout extends Component {
     };
 
     render() {
-        const { title, theme, collapsed, visible } = this.state;
+        const { title, theme, collapsed, visible, width } = this.state;
 
         return (
             <DocumentTitle title={title ? `管理系统-${title}` : '管理系统'}>
-                <Layout style={{ minHeight: '100vh' }}>
-                    <BackTop />
+                <Layout style={{ maxHeight: '100vh' }}>
+                    <SiderMenu
+                        theme={theme}
+                        collapsed={collapsed}
+                        handleChangeTheme={this.changeTheme}
+                        visible={visible}
+                        onClose={this.onClose}
+                        width={width}
+                    />
+
                     <Layout>
-                        <SiderMenu
-                            theme={theme}
+                        <Header
                             collapsed={collapsed}
-                            handleChangeTheme={this.changeTheme}
                             visible={visible}
-                            onClose={this.onClose}
+                            toggleCollapsed={this.toggleCollapsed}
+                            showDrawer={this.showDrawer}
                         />
 
-                        <Layout>
-                            <Header
-                                collapsed={collapsed}
-                                visible={visible}
-                                toggleCollapsed={this.toggleCollapsed}
-                                showDrawer={this.showDrawer}
-                            />
+                        <Content className={styles.content}>
+                            <Switch>
+                                {routerData.map((item, index) => {
+                                    return (
+                                        <Route
+                                            key={index}
+                                            path={item.pathname}
+                                            component={item.component}
+                                            exact={item.exact}
+                                        />
+                                    );
+                                })}
+                            </Switch>
 
-                            <Content className={styles.content}>
-                                <Switch>
-                                    {routerData.map((item, index) => {
-                                        return item.component ? (
-                                            <Route
-                                                key={index}
-                                                path={item.pathname}
-                                                component={item.component}
-                                                exact={item.exact}
-                                            />
-                                        ) : null;
-                                    })}
-                                </Switch>
-                            </Content>
-                            <Footer />
-                        </Layout>
+                            <Suspense fallback={null}>
+                                <Footer />
+                            </Suspense>
+                        </Content>
                     </Layout>
+                    <BackTop />
                 </Layout>
             </DocumentTitle>
         );

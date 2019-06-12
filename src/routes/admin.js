@@ -5,6 +5,9 @@
  * @Description:
  **/
 import Loadable from '../components/asyncComponent';
+import AdminHome from '../pages/AdminHome';
+import AdminArticles from '../pages/AdminArticles';
+import AdminAddArticle from '../pages/AdminAddArticle';
 
 /* 
 全局路由配置
@@ -25,6 +28,7 @@ const admin = [
         title: '首页',
         icon: 'icon-home',
         isAuth: true,
+        // component: AdminHome
         component: Loadable(() => import('../pages/AdminHome'))
     },
     {
@@ -33,6 +37,7 @@ const admin = [
         title: '文章',
         icon: 'icon-home',
         isAuth: true,
+        // component: AdminArticles
         component: Loadable(() => import('../pages/AdminArticles'))
     },
     {
@@ -41,7 +46,17 @@ const admin = [
         title: '添加文件',
         icon: 'icon-home',
         isAuth: true,
+        // component: AdminAddArticle
         component: Loadable(() => import('../pages/AdminAddArticle'))
+    },
+    {
+        pathname: '/admin/hooks',
+        exact: true,
+        title: 'Hooks',
+        icon: 'icon-home',
+        isAuth: true,
+        // component: AdminAddArticle
+        component: Loadable(() => import('../pages/Hooks'))
     }
 ];
 

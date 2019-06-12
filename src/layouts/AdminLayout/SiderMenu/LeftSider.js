@@ -30,26 +30,33 @@ const generateMenu = menuList => {
     });
 };
 
-const BaseMenu = ({ theme, handleChangeTheme, collapsed, width }) => {
+const BaseMenu = ({ theme, handleChangeTheme, collapsed, drawerWidth, width, onClose }) => {
+    const onClick = () => {
+        onClose && onClose();
+    };
     return (
-        <Sider theme={theme} className={styles.sider} collapsed={collapsed} trigger={null} collapsible width={width}>
+        <Sider
+            theme={theme}
+            className={styles.sider}
+            collapsed={collapsed}
+            trigger={null}
+            collapsible
+            width={drawerWidth}>
             <div className={styles.logo} id="logo">
                 <Link to="/">
                     <img src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" alt="logo" />
                     <h1>Antd</h1>
                 </Link>
             </div>
-            <div className={styles.changeTheme}>
-                <div>
-                    <Switch
-                        checked={theme === 'dark'}
-                        onChange={handleChangeTheme}
-                        checkedChildren="Dark"
-                        unCheckedChildren="Light"
-                    />
-                </div>
+            <div className={styles.changeTheme} style={{ width: width }}>
+                <Switch
+                    checked={theme === 'dark'}
+                    onChange={handleChangeTheme}
+                    checkedChildren="Dark"
+                    unCheckedChildren="Light"
+                />
             </div>
-            <Menu theme={theme} mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}>
+            <Menu theme={theme} mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} onClick={onClick}>
                 {generateMenu(adminRouter)}
             </Menu>
         </Sider>

@@ -30,13 +30,7 @@ const generateMenu = menuList => {
 
 const BaseMenu = ({ theme }) => {
     return (
-        <Menu
-            theme={theme}
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            // style={{ height: '100%' }}
-        >
+        <Menu theme={theme} mode="inline" defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']}>
             {generateMenu(adminRouter)}
         </Menu>
     );

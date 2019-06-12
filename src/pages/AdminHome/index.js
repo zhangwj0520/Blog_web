@@ -54,7 +54,7 @@ export default function Index() {
         // fetchData();
     }, []);
     useEffect(() => {
-        console.log(data);
+        // console.log(data);
         // console.log(getContent.result);
     }, []);
 

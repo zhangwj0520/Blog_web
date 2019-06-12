@@ -11,7 +11,7 @@ import generateData from 'data-generator-retail';
 
 const data = generateData();
 // now do whatever you want with the data...
-console.log(data);
+// console.log(data);
 
 const replaceHtml = /<(?:.|\s)*?>/g;
 export default function Dome4({ lastArticle, lastSay }) {

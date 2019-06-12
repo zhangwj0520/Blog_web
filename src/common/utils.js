@@ -1,14 +1,11 @@
-/**
- * @LastEditors: zhang weijie
- * @Date: 2019-05-28 14:23:01
- * @LastEditTime: 2019-05-30 17:59:15
- * @Description:
- **/
+import { useState, useRef } from 'react';
 import moment from 'moment';
 import nzh from 'nzh/cn';
 import { message } from 'antd';
 import { push } from 'react-router-redux';
 import { store } from '../store/configureStore';
+
+import { HooksAbortFetch } from './fetch';
 
 export async function checkHttpStatus(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -291,3 +288,25 @@ export const sleep = wait => {
         setTimeout(() => resolve(), wait);
     });
 };
+
+export const HooksFetch = HooksAbortFetch;
+
+export function useSetState(initState = {}) {
+    const [state, replaceState] = useState(initState);
+
+    const setState = useRef(function setState(newState) {
+        if (typeof newState === 'function') {
+            replaceState(prevState => ({
+                ...prevState,
+                ...newState(prevState)
+            }));
+        } else {
+            replaceState(prevState => ({
+                ...prevState,
+                ...newState
+            }));
+        }
+    });
+
+    return [state, setState.current];
+}

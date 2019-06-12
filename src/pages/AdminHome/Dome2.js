@@ -1,24 +1,15 @@
-/**
- * @LastEditors: zhang weijie
- * @Date: 2019-05-31 17:20:44
- * @LastEditTime: 2019-06-03 11:01:44
- * @Description:
- **/
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Collapse, Progress, Timeline, Avatar, Tag } from 'antd';
 import _ from 'lodash';
 
-import { HookGet } from '../../common/fetch';
 import { useSetState } from '../../common/hooks';
 
 import styles from './index.module.less';
 const jinrishici = require('jinrishici');
 
 const { Panel } = Collapse;
-const { Meta } = Card;
 
 export default function Dome2({ motto }) {
-    // const { fetchData, isLoading, fetchStatus, result, total, data } = HookGet('https://api.gushi.ci/all.json');
     const [state, setState] = useSetState({
         matchTags: ['古诗'],
         author: '',
@@ -29,7 +20,6 @@ export default function Dome2({ motto }) {
     useEffect(() => {
         jinrishici.load(
             result => {
-                console.log(result.data);
                 const {
                     matchTags,
                     origin: { author, content, dynasty, title }
