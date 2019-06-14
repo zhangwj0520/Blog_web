@@ -1,9 +1,3 @@
-/**
- * @LastEditors: zhang weijie
- * @Date: 2019-05-28 10:53:58
- * @LastEditTime: 2019-05-28 14:27:29
- * @Description:
- **/
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
