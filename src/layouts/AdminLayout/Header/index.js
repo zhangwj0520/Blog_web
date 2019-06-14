@@ -8,13 +8,14 @@ import React from 'react';
 import { Col, Layout, Row } from 'antd';
 
 import MyIcon from '../../../components/MyIcon';
-import styles from '../style.module.less';
+import styles from './index.less';
+import RightContent from './RightContent';
 
 const { Header } = Layout;
 
-export default function index({ collapsed, visible, toggleCollapsed, showDrawer }) {
+export default function index({ collapsed, visible, toggleCollapsed, showDrawer, onHeaderMenuClick }) {
     return (
-        <Header className={styles.header}>
+        <Header className="header">
             <Row>
                 <Col xs={2} sm={2} md={0}>
                     <div className={styles.logo} id="logo">
@@ -34,6 +35,9 @@ export default function index({ collapsed, visible, toggleCollapsed, showDrawer 
                         onClick={showDrawer}
                         style={{ fontSize: 20, marginLeft: 20, marginTop: 24 }}
                     />
+                </Col>
+                <Col>
+                    <RightContent onHeaderMenuClick={onHeaderMenuClick} />
                 </Col>
             </Row>
         </Header>

@@ -4,10 +4,10 @@
  * @LastEditTime: 2019-06-01 07:00:41
  * @Description:
  **/
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Card, Tag, Tooltip, Modal } from 'antd';
 import { Link } from 'react-router-dom';
-import { context } from '../../../store/context-hooks';
+import { useSelector } from 'react-redux';
 
 import portraitBg from '../../../assets/image/portrait_bg.jpg';
 import meImg from '../../../assets/image/me.jpg';
@@ -18,9 +18,7 @@ const { Meta } = Card;
 
 const colors = ['#f50', '#f8a72a', '#87d068', '#108ee9', '#6b61f0'];
 const NavSide = props => {
-    const {
-        globalState: { tags, artTypes }
-    } = useContext(context);
+    const { tags, artTypes } = useSelector(state => state.commonData);
     console.log(tags);
 
     const [visible, setVisible] = useState(false);

@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react';
-import { context } from '../../store/context-hooks';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Button, message, Modal, Table, Tag, Tooltip, Card } from 'antd';
 import EditArticle from './EditArticle';
 import SearchForm from './SearchForm';
@@ -10,11 +10,7 @@ import './style.less';
 const confirm = Modal.confirm;
 
 const Articles = () => {
-    const {
-        globalState,
-        globalState: { tags }
-    } = useContext(context); //获取hooks全局状态
-    // console.log(globalState);
+    const { tags } = useSelector(state => state.commonData);
     const [state, setState] = useSetState({
         data: [],
         article: {},

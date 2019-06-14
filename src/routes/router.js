@@ -1,45 +1,29 @@
-/**
- * @LastEditors: zhang weijie
- * @Date: 2019-05-28 13:49:08
- * @LastEditTime: 2019-05-31 13:43:29
- * @Description: 路由
- **/
 import { Router, Switch, Route } from 'react-router-dom';
-import React, { useEffect, useContext } from 'react';
-// import UserLayout from '../layouts/UserLayout';
-// import BasicLayout from '../layouts/BasicLayout';
+import React, { useEffect } from 'react';
 import BasicLayout from '../layouts/BasicLayout';
 import AdminLayout from '../layouts/AdminLayout';
 import UserLayout from '../layouts/UserLayout';
-import { context } from '../store/context-hooks';
-import { fetchData, checkDataStatus } from '../common/utils';
+import { useDispatch } from 'react-redux';
+
+import { getCommonData } from '../store/modules/commonData';
 
 // 按照 Layout 分组路由
 // UserLayout 对应的路由：/user/xxx
 // BasicLayout 对应的路由：/xxx
 
 const Routers = props => {
-    const { state, dispatch } = useContext(context);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        fetchData('/blog/tags').then(res => {
-            if (checkDataStatus(res)) {
-                dispatch({ type: 'setTags', payload: { tags: res.data } });
-            }
-        });
-        fetchData('/blog/types').then(res => {
-            if (checkDataStatus(res)) {
-                dispatch({ type: 'setTags', payload: { artTypes: res.data } });
-            }
-        });
+        getCommonData(dispatch);
     }, []);
 
     return (
         <Router history={props.history}>
             <Switch>
-                <Route path="/admin" component={AdminLayout} />
-                <Route path="/user" component={UserLayout} />
-                <Route path="/" component={BasicLayout} />
+                <Route key={'admin'} path="/admin" component={AdminLayout} />
+                <Route key={'user'} path="/user" component={UserLayout} />
+                <Route key={'/'} path="/" component={BasicLayout} />
             </Switch>
         </Router>
     );

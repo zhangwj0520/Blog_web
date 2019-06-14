@@ -1,12 +1,7 @@
-/**
- * @LastEditors: zhang weijie
- * @Date: 2019-05-28 14:07:19
- * @LastEditTime: 2019-05-28 14:21:27
- * @Description:
- **/
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import getUserInfoReducer from './modules/getUserInfo';
+import commonData from './modules/commonData';
 
 import { store } from './configureStore';
 
@@ -14,6 +9,7 @@ export const makeRootReducer = reducers => {
     return combineReducers({
         routing: routerReducer,
         userInfo: getUserInfoReducer,
+        commonData: commonData,
         ...reducers
     });
 };

@@ -35,7 +35,6 @@ export function UseAbortableFetch(props) {
     }, [fetchData, query]);
 
     useEffect(() => {
-        console.log(result);
         if (result && result.status === 'success') {
             const {
                 matchTags,

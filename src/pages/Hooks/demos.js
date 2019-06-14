@@ -5,8 +5,15 @@ import { UseModal, source as useModalSource } from './UseModal';
 import { UseAbortableFetch, source as UseAbortAbleFetchSource } from './UseAbortAbleFetch';
 import { UsePagableTable, source as UsePagableTableSource } from './UsePagableTable';
 import { Books, source as BooksSource } from './books';
+import { NewRedux, source as NewReduxSource } from './ReactRedux7.1';
 
 export default [
+    {
+        title: 'ReactRedux7.1',
+        des: 'ReactRedux7.1',
+        Comp: NewRedux,
+        source: NewReduxSource
+    },
     {
         title: 'useAbortAbleFetch',
         des: '可以取消的fetch',

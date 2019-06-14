@@ -52,6 +52,25 @@ class UserLayout extends Component {
         });
     };
 
+    onHeaderMenuClick = ({ key }) => {
+        const { history } = this.props;
+        if (key === 'userCenter') {
+            history.push('/account/center');
+            return;
+        }
+        if (key === 'triggerError') {
+            history.push('/exception/trigger');
+            return;
+        }
+        if (key === 'userinfo') {
+            history.push('/account/settings/base');
+            return;
+        }
+        if (key === 'logout') {
+            localStorage.clear();
+            history.push('/');
+        }
+    };
     //pc导航
     toggleCollapsed = () => {
         const { collapsed } = this.state;
@@ -95,6 +114,8 @@ class UserLayout extends Component {
                             visible={visible}
                             toggleCollapsed={this.toggleCollapsed}
                             showDrawer={this.showDrawer}
+                            onHeaderMenuClick={this.onHeaderMenuClick}
+                            style={{ position: 'absolute' }}
                         />
 
                         <Content className={styles.content}>

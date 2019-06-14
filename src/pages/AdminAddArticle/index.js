@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
-import { context } from '../../store/context-hooks';
+import React from 'react';
+import { useSelector, connect, useStore } from 'react-redux';
 import { Button, Form, Input, Select, message, Card, Row, Col } from 'antd';
 import Editor from '../../components/Editor';
-
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AddArticle } from '../../store/articles/action';
 
@@ -15,9 +13,11 @@ const FormItem = Form.Item;
 const AddArticlePage = props => {
     const { getFieldDecorator, validateFields } = props.form;
 
-    const {
-        globalState: { tags, artTypes }
-    } = useContext(context); //获取hooks全局状态
+    const { tags, artTypes } = useSelector(state => state.commonData);
+
+    const store = useStore();
+    // console.log(store);
+    // console.log(store.getState());
 
     const handleSubmit = e => {
         e.preventDefault();

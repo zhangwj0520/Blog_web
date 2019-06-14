@@ -9,7 +9,6 @@ import React from 'react';
 import styles from './index.module.less';
 
 export default ({ title }) => {
-    console.log(title);
     return (
         <div className={styles.breadCrumb}>
             <span className="fl">当前位置 : {title}</span>
