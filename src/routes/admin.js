@@ -57,6 +57,24 @@ const admin = [
         isAuth: true,
         // component: AdminAddArticle
         component: Loadable(() => import('../pages/Hooks'))
+    },
+    {
+        pathname: '/admin/Material-UI',
+        exact: true,
+        title: 'Material-UI',
+        icon: 'icon-home',
+        isAuth: true,
+        // component: AdminAddArticle
+        component: Loadable(() => import('../pages/MaterialUI'))
+    },
+    {
+        pathname: '/admin/Material-Table',
+        exact: true,
+        title: 'Material-Table',
+        icon: 'icon-home',
+        isAuth: true,
+        // component: AdminAddArticle
+        component: Loadable(() => import('../pages/MaterialUI/tabel'))
     }
 ];
 

@@ -16,7 +16,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 
-import { reduxRouter } from '../../utils/utils';
+import { reduxRouter } from '../../common/utils';
 
 const styles = theme => ({
     root: {
@@ -86,68 +86,40 @@ class MaterialUI extends Component {
                     <Icon className={classes.icon} color="action">
                         add_circle
                     </Icon>
-                    <Icon
-                        className={classes.iconHover}
-                        color="error"
-                        style={{ fontSize: 30 }}>
+                    <Icon className={classes.iconHover} color="error" style={{ fontSize: 30 }}>
                         add_circle
                     </Icon>
-                    <Icon
-                        className={classes.icon}
-                        color="disabled"
-                        fontSize="large">
+                    <Icon className={classes.icon} color="disabled" fontSize="large">
                         add_circle
                     </Icon>
                 </div>
                 <div className={classes.root}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}>
+                    <Button variant="contained" color="primary" className={classes.button}>
                         Primary
                     </Button>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.button}>
+                    <Button variant="contained" color="secondary" className={classes.button}>
                         Secondary
                     </Button>
                 </div>
                 <div className={classes.root}>
-                    <Button
-                        variant="outlined"
-                        color="primary"
-                        className={classes.button}>
+                    <Button variant="outlined" color="primary" className={classes.button}>
                         Primary
                     </Button>
-                    <Button
-                        variant="outlined"
-                        color="secondary"
-                        className={classes.button}>
+                    <Button variant="outlined" color="secondary" className={classes.button}>
                         Secondary
                     </Button>
                 </div>
                 <div className={classes.root}>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.button}>
+                    <Button variant="contained" color="secondary" className={classes.button}>
                         Delete
                         {/* <DeleteIcon className={classes.rightIcon} /> */}
                         <Icon className={classes.rightIcon}>delete</Icon>
                     </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={this.onClick}
-                        className={classes.button}>
+                    <Button variant="contained" color="primary" onClick={this.onClick} className={classes.button}>
                         Send
                         <Icon className={classes.rightIcon}>send</Icon>
                     </Button>
-                    <Button
-                        variant="contained"
-                        color="default"
-                        className={classes.button}>
+                    <Button variant="contained" color="default" className={classes.button}>
                         Upload
                         <CloudUploadIcon className={classes.rightIcon} />
                     </Button>
@@ -158,31 +130,19 @@ class MaterialUI extends Component {
                             <ListItemIcon className={classes.icon}>
                                 <SendIcon />
                             </ListItemIcon>
-                            <ListItemText
-                                classes={{ primary: classes.primary }}
-                                inset
-                                primary="Sent mail"
-                            />
+                            <ListItemText classes={{ primary: classes.primary }} inset primary="Sent mail" />
                         </MenuItem>
                         <MenuItem className={classes.menuItem}>
                             <ListItemIcon className={classes.icon}>
                                 <DraftsIcon />
                             </ListItemIcon>
-                            <ListItemText
-                                classes={{ primary: classes.primary }}
-                                inset
-                                primary="Drafts"
-                            />
+                            <ListItemText classes={{ primary: classes.primary }} inset primary="Drafts" />
                         </MenuItem>
                         <MenuItem className={classes.menuItem}>
                             <ListItemIcon className={classes.icon}>
                                 <InboxIcon />
                             </ListItemIcon>
-                            <ListItemText
-                                classes={{ primary: classes.primary }}
-                                inset
-                                primary="Inbox"
-                            />
+                            <ListItemText classes={{ primary: classes.primary }} inset primary="Inbox" />
                         </MenuItem>
                     </MenuList>
                 </Paper>
